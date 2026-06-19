@@ -8,6 +8,7 @@ The architecture consists of a Program Counter (PC), Memory Address Register (MA
 The processor supports arithmetic operations, logical operations, memory read/write functionality, input/output handling, and status flag generation using Carry Flag (CF) and Zero Flag (ZF) mechanisms. A four-digit seven-segment display interface provides real-time visualization of processor outputs, making the architecture suitable for educational learning, FPGA prototyping, and embedded system development.
 
 The modular design methodology allows easy scalability for future enhancements such as advanced instruction sets, communication peripherals, sensor interfaces, AI-assisted decision engines, and intelligent embedded computing applications.
+
 PROBLEM STATEMENT
 
 In modern digital systems, understanding the internal operation of a processor is essential for learning computer organization, digital design, and FPGA-based system development. However, commercial processors are highly complex, making it difficult for students and beginners to visualize instruction execution, data movement, and control signal generation. This project addresses the problem by designing and implementing a custom 8-Bit Computer Architecture on FPGA using Verilog HDL.
