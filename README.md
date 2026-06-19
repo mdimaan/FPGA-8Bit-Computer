@@ -1,18 +1,497 @@
-# FPGA-8Bit-Computer
-PROJECT OVERVIEW:
+# FPGA Implementation of an 8-Bit Computer Architecture
 
-This project implements a custom 8-Bit Computer Architecture in Verilog HDL and targets FPGA-based hardware platforms. The design demonstrates the fundamental concepts of processor architecture, including instruction execution, memory access, arithmetic and logical processing, register operations, and control signal generation through a centralized control unit.
+## Project Overview
 
-The architecture consists of a Program Counter (PC), Memory Address Register (MAR), RAM, Instruction Register (IR), Arithmetic Logic Unit (ALU), A Register, B Register, Input Register, Output Register, Flag Register, and an 8-bit System Bus. Instructions are executed through a structured Fetch–Execute cycle, enabling efficient data movement and processing across the system.
+This project presents the design and implementation of a custom **8-Bit Computer Architecture** using **Verilog HDL** on an FPGA platform. The processor is built from fundamental computer architecture components including registers, memory, arithmetic logic unit (ALU), control unit, and a shared system bus.
 
-The processor supports arithmetic operations, logical operations, memory read/write functionality, input/output handling, and status flag generation using Carry Flag (CF) and Zero Flag (ZF) mechanisms. A four-digit seven-segment display interface provides real-time visualization of processor outputs, making the architecture suitable for educational learning, FPGA prototyping, and embedded system development.
+The architecture demonstrates the complete instruction execution process through **Fetch**, **Decode**, and **Execute** cycles. It supports arithmetic operations, logical operations, memory access, data transfer, and output display functionality while providing a clear understanding of processor internals.
 
-The modular design methodology allows easy scalability for future enhancements such as advanced instruction sets, communication peripherals, sensor interfaces, AI-assisted decision engines, and intelligent embedded computing applications.
+The design follows synchronous digital design principles and has been verified through simulation and FPGA implementation.
 
-PROBLEM STATEMENT
+---
 
-In modern digital systems, understanding the internal operation of a processor is essential for learning computer organization, digital design, and FPGA-based system development. However, commercial processors are highly complex, making it difficult for students and beginners to visualize instruction execution, data movement, and control signal generation. This project addresses the problem by designing and implementing a custom 8-Bit Computer Architecture on FPGA using Verilog HDL.
+## Table of Contents
 
-The architecture integrates essential processor components such as the Program Counter (PC), Memory Address Register (MAR), RAM, Instruction Register (IR), Control Unit, Arithmetic Logic Unit (ALU), A Register, B Register, Flag Register, Input Register, Output Register, and System Bus. The processor executes instructions through dedicated Fetch and Execute cycles, enabling data transfer, arithmetic operations, logical operations, memory access, and output display functions.
+* Problem Statement
+* Features
+* Tools and Hardware
+* Architecture Overview
+* Block Diagram
+* System Components
+* Instruction Format
+* Instruction Set Architecture (ISA)
+* Fetch Cycle
+* Execute Cycle
+* ALU Operations
+* Control Signals
+* Verilog Implementation
+* FPGA Implementation
+* Testing and Verification
+* File Structure
+* Contributors
+* Conclusion
 
-The design ensures correct operation through synchronized control signals, bus-based data communication, register management, and flag generation. Reliable instruction execution is maintained during memory access, arithmetic computation, program sequencing, and data transfer operations, providing a complete educational microprocessor implementation suitable for FPGA platforms.
+---
+
+# Problem Statement
+
+Modern processors contain millions of transistors and complex control logic, making it difficult for students and beginners to understand the fundamental concepts of computer architecture. There is a need for a simplified processor design that demonstrates instruction execution, memory access, arithmetic operations, and control signal generation in a clear and educational manner.
+
+This project addresses the problem by implementing a complete **8-Bit Computer Architecture on FPGA using Verilog HDL**. The processor integrates memory, registers, control logic, and an arithmetic logic unit to execute instructions through a bus-based architecture.
+
+The design ensures reliable operation through synchronized control signals, register-based data transfer, memory interfacing, and flag generation while maintaining a simple and understandable architecture suitable for educational and research purposes.
+
+---
+
+# Features
+
+* Custom 8-Bit Processor Design
+* FPGA-Based Implementation
+* Shared 8-Bit System Bus
+* Program Counter (PC)
+* Memory Address Register (MAR)
+* 32 × 8 RAM Memory
+* Instruction Register (IR)
+* Arithmetic Logic Unit (ALU)
+* A Register (Accumulator)
+* B Register
+* Flag Register
+* Input Register
+* Output Register
+* Seven Segment Display Interface
+* Fetch-Decode-Execute Operation
+* Control Signal Generation
+* Verilog HDL Implementation
+* Fully Synthesizable Design
+* FPGA Hardware Verification
+
+---
+
+# Tools and Hardware
+
+### FPGA Board
+
+* AMD Xilinx FPGA Development Board
+
+### HDL Language
+
+* Verilog HDL
+
+### Design Tool
+
+* AMD Vivado 2024
+
+### Verification
+
+* Vivado Simulator
+* FPGA Hardware Testing
+
+---
+
+# Architecture Overview
+
+The processor follows a bus-based architecture where all major components communicate through a centralized **8-Bit System Bus**.
+
+The architecture consists of:
+
+* Program Counter (PC)
+* Memory Address Register (MAR)
+* RAM
+* Instruction Register (IR)
+* Control Unit
+* ALU
+* A Register
+* B Register
+* Flag Register
+* Input Register
+* Output Register
+* Output Display
+
+The Control Unit coordinates all operations using dedicated control signals and timing states.
+
+---
+
+# Block Diagram
+
+Insert your architecture block diagram image here.
+
+```markdown
+![8-Bit Computer Architecture](images/architecture.png)
+```
+
+---
+
+# System Components
+
+## Program Counter (PC)
+
+Stores the address of the next instruction to be executed.
+
+### Functions
+
+* Holds current instruction address
+* Increments after fetch cycle
+* Places address on system bus
+
+---
+
+## Memory Address Register (MAR)
+
+Stores memory addresses for RAM access.
+
+### Functions
+
+* Receives address from PC
+* Selects RAM location
+* Supports memory read and write operations
+
+---
+
+## RAM (32 × 8)
+
+Stores program instructions and data.
+
+### Functions
+
+* Read operation
+* Write operation
+* Instruction storage
+* Data storage
+
+---
+
+## Instruction Register (IR)
+
+Stores fetched instruction.
+
+### Functions
+
+* Holds Opcode
+* Holds Operand
+* Sends instruction information to Control Unit
+
+---
+
+## Arithmetic Logic Unit (ALU)
+
+Performs arithmetic and logical operations.
+
+### Supported Operations
+
+* ADD
+* SUB
+* DIV
+* AND
+* OR
+* XOR
+* NOT
+
+---
+
+## A Register
+
+Primary accumulator register.
+
+### Functions
+
+* Stores ALU results
+* Provides first ALU operand
+
+---
+
+## B Register
+
+Secondary register.
+
+### Functions
+
+* Provides second ALU operand
+* Stores temporary data
+
+---
+
+## Flag Register
+
+Stores processor status flags.
+
+### Flags
+
+* Zero Flag (ZF)
+* Carry Flag (CF)
+
+---
+
+## Input Register
+
+Receives external input data.
+
+### Functions
+
+* Data acquisition
+* User input interface
+
+---
+
+## Output Register
+
+Stores processed output data.
+
+### Functions
+
+* Receives data from bus
+* Sends data to display
+
+---
+
+# Instruction Format
+
+The processor uses an 8-bit instruction format.
+
+| Field   | Size   |
+| ------- | ------ |
+| Opcode  | 4 Bits |
+| Operand | 4 Bits |
+
+### Format
+
+```text
+--------------------------------
+| Opcode (4) | Operand (4) |
+--------------------------------
+```
+
+---
+
+# Instruction Set Architecture (ISA)
+
+| Opcode | Mnemonic | Description          |
+| ------ | -------- | -------------------- |
+| 0000   | LDA      | Load Accumulator     |
+| 0001   | ADD      | Add Memory Data      |
+| 0010   | SUB      | Subtract Memory Data |
+| 0011   | DIV      | Divide Memory Data   |
+| 0100   | AND      | Logical AND          |
+| 0101   | OR       | Logical OR           |
+| 0110   | XOR      | Logical XOR          |
+| 0111   | NOT      | Logical NOT          |
+| 1000   | OUT      | Output Data          |
+| 1111   | HLT      | Halt Processor       |
+
+---
+
+# Fetch Cycle
+
+### T0
+
+```text
+PC → BUS → MAR
+```
+
+### T1
+
+```text
+RAM → BUS → IR
+```
+
+### T2
+
+```text
+PC = PC + 1
+```
+
+---
+
+# Execute Cycle
+
+### T3 – T5
+
+Depending on the opcode:
+
+* Load data
+* Perform ALU operation
+* Store result
+* Generate flags
+* Send output
+
+---
+
+# ALU Operations
+
+The ALU supports:
+
+### Arithmetic
+
+* Addition
+* Subtraction
+* Division
+
+### Logical
+
+* AND
+* OR
+* XOR
+* NOT
+
+The ALU updates the Flag Register after each operation.
+
+---
+
+# Control Signals
+
+| Signal | Description        |
+| ------ | ------------------ |
+| CO     | Counter Out        |
+| CE     | Counter Enable     |
+| CL     | Counter Load       |
+| MI     | MAR In             |
+| RI     | RAM In             |
+| RO     | RAM Out            |
+| II     | Instruction In     |
+| IO     | Instruction Out    |
+| AI     | A Register In      |
+| AO     | A Register Out     |
+| BI     | B Register In      |
+| EO     | ALU Out            |
+| FI     | Flag Register In   |
+| OI     | Output Register In |
+| HLT    | Halt               |
+
+---
+
+# Verilog Implementation
+
+### Main Modules
+
+```text
+top.v
+control_unit.v
+program_counter.v
+mar.v
+ram.v
+instruction_register.v
+alu.v
+a_register.v
+b_register.v
+flag_register.v
+input_register.v
+output_register.v
+```
+
+---
+
+# FPGA Implementation
+
+The architecture was synthesized and implemented using AMD Vivado.
+
+### FPGA Resources
+
+* LUTs
+* Flip-Flops
+* Block RAM
+* Clock Resources
+
+The design successfully executed instructions and displayed output on FPGA hardware.
+
+---
+
+# Testing and Verification
+
+The processor was verified through:
+
+* Functional Simulation
+* RTL Verification
+* Timing Verification
+* FPGA Hardware Testing
+
+### Verified Operations
+
+* Memory Read
+* Memory Write
+* Instruction Fetch
+* Instruction Decode
+* ALU Operations
+* Flag Generation
+* Output Display
+
+---
+
+# File Structure
+
+```text
+FPGA_8BIT_COMPUTER/
+│
+├── rtl/
+│   ├── alu.v
+│   ├── program_counter.v
+│   ├── mar.v
+│   ├── ram.v
+│   ├── instruction_register.v
+│   ├── control_unit.v
+│   ├── a_register.v
+│   ├── b_register.v
+│   ├── flag_register.v
+│   ├── input_register.v
+│   ├── output_register.v
+│   └── top.v
+│
+├── sim/
+├── constraints/
+├── images/
+├── docs/
+└── README.md
+```
+
+---
+
+# Contributors
+
+### Mohammed Shakil Imaan
+
+B.E. Electrical and Electronics Engineering
+Bannari Amman Institute of Technology
+
+Harish P
+
+B.E. Electrical and Electronics Engineering
+Bannari Amman Institute of Technology
+
+GitHub: https://github.com/harishee129
+
+Velmurugan R
+
+B.E. Electrical and Electronics Engineering
+Bannari Amman Institute of Technology
+
+GitHub: https://github.com/velmurugan-vlsi
+### Faculty Mentor
+
+Dr. Elango Sekar
+Associate Professor, Department of ECE
+Bannari Amman Institute of Technology
+
+**BIT – Centre for SoC and FPGA Design**
+
+---
+
+# Conclusion
+
+This project successfully demonstrates the design and FPGA implementation of a custom **8-Bit Computer Architecture** using Verilog HDL. The architecture provides a practical understanding of processor design concepts including memory interfacing, instruction execution, ALU operations, register transfers, control logic, and bus-based communication.
+
+The project serves as an excellent educational platform for learning computer organization, digital design, FPGA development, and processor architecture fundamentals.
+
+---
+
+# Notes
+
+This project enhanced understanding of:
+
+* Computer Architecture
+* Processor Design
+* Register Transfer Logic (RTL)
+* Verilog HDL
+* FPGA Design Flow
+* Control Unit Design
+* ALU Design
+* Memory Interfacing
+* Timing and Synchronization
+* Digital System Verification
