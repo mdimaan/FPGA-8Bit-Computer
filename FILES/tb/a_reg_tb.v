@@ -1,21 +1,3 @@
-// =====================================================================
-// Testbench   : a_reg_tb
-// Unit Under Test : a_reg.v
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. Reset, confirm a_out = 0x00.
-//   2. AI=1,EN=1 with bus_in=0x3C; confirm a_out latches 0x3C.
-//   3. AI=0; change bus_in; confirm a_out holds.
-//   4. AI=1,EN=0; confirm a_out does NOT change (gating).
-//   5. AI=1,EN=1 with new value 0xFF; confirm latch.
-//
-// Expected Waveform (a_reg_tb.vcd):
-//   reset -> a_out flat 0x00.
-//   AI pulse w/ bus=0x3C -> a_out steps to 0x3C.
-//   AI=0 -> a_out flat despite bus_in changing.
-//   AI=1,EN=0 -> a_out flat (gated).
-//   AI=1,EN=1 -> a_out steps to 0xFF.
-// =====================================================================
 `timescale 1ns/1ps
 
 module a_reg_tb;
