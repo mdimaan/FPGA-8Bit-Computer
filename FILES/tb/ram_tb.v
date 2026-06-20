@@ -35,7 +35,6 @@ module ram_tb;
         clk = 0; reset = 0; EN = 0; run_mode = 0; RI = 0; prog_write = 0;
         addr_run = 0; prog_addr = 0; bus_in = 0; prog_data = 0;
 
-        // ---- Program Mode writes ----
         prog_addr = 4'h3; prog_data = 8'hAA; prog_write = 1;
         @(posedge clk); #1;
         prog_write = 0;
@@ -49,27 +48,22 @@ module ram_tb;
         prog_addr = 4'h3;
         #1; check(8'hAA, "Program Mode: addr3 still holds 0xAA (no write pulse)");
 
-        // ---- Switch to Run Mode ----
         run_mode = 1; addr_run = 4'h3;
         #1; check(8'hAA, "Run Mode: addr_run=3 reads 0xAA programmed earlier");
 
-        // ---- Run-mode write, EN=1 ----
         RI = 1; EN = 1; bus_in = 8'h99;
         @(posedge clk); #1;
         check(8'h99, "Run Mode write: addr_run=3 now reads 0x99");
 
-        // ---- Run-mode write attempt with EN=0 (should be blocked) ----
         RI = 1; EN = 0; bus_in = 8'h11;
         @(posedge clk); #1;
         check(8'h99, "EN=0 blocks run-mode write (still 0x99)");
 
-        // ---- Run-mode write attempt with reset=1 (should be blocked) ----
         RI = 1; EN = 1; reset = 1; bus_in = 8'h22;
         @(posedge clk); #1;
         check(8'h99, "reset=1 blocks run-mode write (still 0x99)");
         reset = 0; RI = 0;
 
-        // ---- Confirm reset never clears RAM contents ----
         run_mode = 0; prog_addr = 4'h7;
         #1; check(8'h55, "RAM contents survive reset (addr7 still 0x55)");
 
