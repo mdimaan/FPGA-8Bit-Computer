@@ -264,11 +264,6 @@ The processor uses an 8-bit instruction format.
 | 0000   | LDA      | Load Accumulator     |
 | 0001   | ADD      | Add Memory Data      |
 | 0010   | SUB      | Subtract Memory Data |
-| 0011   | DIV      | Divide Memory Data   |
-| 0100   | AND      | Logical AND          |
-| 0101   | OR       | Logical OR           |
-| 0110   | XOR      | Logical XOR          |
-| 0111   | NOT      | Logical NOT          |
 | 1000   | OUT      | Output Data          |
 | 1111   | HLT      | Halt Processor       |
 
