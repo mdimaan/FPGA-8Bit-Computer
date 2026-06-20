@@ -1,24 +1,3 @@
-// =====================================================================
-// Testbench   : ir_tb
-// Unit Under Test : ir.v
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. Reset, confirm ir_out=0, opcode=0, operand=0.
-//   2. Load bus_in = 8'b0001_0101 (ADD addr 5) with II=1,EN=1; confirm
-//      ir_out = 0x15, opcode = 0001, operand = 0101.
-//   3. Load bus_in = 8'b1111_0000 (HLT) with II=1,EN=1; confirm
-//      opcode = 1111, operand = 0000.
-//   4. Hold II=0; confirm value holds despite bus_in changing.
-//   5. Assert II=1, EN=0; confirm value does NOT change (gating).
-//
-// Expected Waveform (ir_tb.vcd):
-//   reset -> ir_out flat 0x00.
-//   II pulse w/ bus=0x15 -> ir_out steps to 0x15; opcode/operand split
-//   visible immediately as combinational taps of ir_out.
-//   II pulse w/ bus=0xF0 -> ir_out steps to 0xF0 (opcode=1111).
-//   II=0 region -> ir_out flat regardless of bus_in.
-//   II=1,EN=0 region -> ir_out flat (gated).
-// =====================================================================
 `timescale 1ns/1ps
 
 module ir_tb;
