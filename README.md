@@ -142,7 +142,7 @@ Stores memory addresses for RAM access.
 
 ---
 
-## RAM (32 × 8)
+## RAM (16 × 8)
 
 Stores program instructions and data.
 
