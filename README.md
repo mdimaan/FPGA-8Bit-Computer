@@ -258,17 +258,24 @@ The processor uses an 8-bit instruction format.
 ---
 
 # Instruction Set Architecture (ISA)
-| Instruction  | Operation              |
-| ------------ | ---------------------- |
-| **LDA addr** | `A ← RAM[addr]`        |
-| **ADD addr** | `A ← A + RAM[addr]`    |
-| **SUB addr** | `A ← A − RAM[addr]`    |
-| **STA addr** | `RAM[addr] ← A`        |
-| **JMP addr** | `PC ← addr`            |
-| **JZ addr**  | `If ZF = 1, PC ← addr` |
-| **OUT**      | `OUT ← A`              |
-| **HLT**      | Stop CPU Execution     |
-
+| Opcode | Mnemonic     | Operand | Description                             |
+| ------ | ------------ | ------- | --------------------------------------- |
+| `0000` | **LDA addr** | Yes     | Load accumulator with data from memory  |
+| `0001` | **ADD addr** | Yes     | Add memory data to accumulator          |
+| `0010` | **SUB addr** | Yes     | Subtract memory data from accumulator   |
+| `0011` | **STA addr** | Yes     | Store accumulator value into memory     |
+| `0100` | **JMP addr** | Yes     | Unconditional jump                      |
+| `0101` | **JZ addr**  | Yes     | Jump if Zero Flag is set                |
+| `0110` | **NOP**      | No      | No operation                            |
+| `0111` | **NOP**      | No      | No operation                            |
+| `1000` | **NOP**      | No      | No operation                            |
+| `1001` | **NOP**      | No      | No operation                            |
+| `1010` | **NOP**      | No      | No operation                            |
+| `1011` | **NOP**      | No      | No operation                            |
+| `1100` | **NOP**      | No      | No operation                            |
+| `1101` | **NOP**      | No      | No operation                            |
+| `1110` | **OUT**      | No      | Transfer accumulator to output register |
+| `1111` | **HLT**      | No      | Halt processor execution                |
 ---
 
 # Fetch Cycle
