@@ -1,19 +1,3 @@
-// =====================================================================
-// Testbench   : out_reg_tb
-// Unit Under Test : out_reg.v
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. Reset, confirm out_val = 0x00.
-//   2. OI=1,EN=1 with bus_in=0x42; confirm out_val latches 0x42.
-//   3. OI=0; confirm value holds (this models A changing after OUT
-//      without disturbing the displayed value).
-//   4. OI=1,EN=0; confirm value does NOT change (gating).
-//   5. OI=1,EN=1 with new value 0xFF; confirm latch.
-//
-// Expected Waveform (out_reg_tb.vcd):
-//   Flat at 0x00 through reset, single step to 0x42 on the OI+EN
-//   load, flat thereafter until the next accepted load to 0xFF.
-// =====================================================================
 `timescale 1ns/1ps
 
 module out_reg_tb;
