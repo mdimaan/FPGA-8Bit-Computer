@@ -36,7 +36,7 @@ module flag_reg_tb;
         reset = 0; EN = 1; FI = 1; zero_in = 1; carry_in = 0;
         @(posedge clk); #1; check(2'b01, "capture ZF=1,CF=0");
 
-        FI = 0; zero_in = 0; carry_in = 1; // change inputs, should not matter
+        FI = 0; zero_in = 0; carry_in = 1; 
         @(posedge clk); #1; check(2'b01, "FI=0 holds latched flags");
 
         FI = 1; EN = 1; zero_in = 0; carry_in = 1;
