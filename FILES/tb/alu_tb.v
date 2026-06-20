@@ -1,21 +1,3 @@
-// =====================================================================
-// Testbench   : alu_tb
-// Unit Under Test : alu.v  (purely combinational -- no clock needed)
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. ADD: 0x05 + 0x03 = 0x08, ZF=0, CF=0.
-//   2. ADD with carry-out: 0xFF + 0x02 = 0x01 (mod 256), CF=1, ZF=0.
-//   3. ADD producing zero: 0x00 + 0x00 = 0x00, ZF=1, CF=0.
-//   4. SUB: 0x09 - 0x04 = 0x05, ZF=0, CF=1 (no borrow, a>=b).
-//   5. SUB producing zero: 0x07 - 0x07 = 0x00, ZF=1, CF=1 (no borrow).
-//   6. SUB with borrow: 0x03 - 0x05 = 0xFE (two's complement wrap),
-//      CF=0 (borrow occurred), ZF=0.
-//
-// Expected Waveform (alu_tb.vcd):
-//   Purely combinational -- result/zero_flag/carry_flag change
-//   immediately (same simulation time step) whenever a_in/b_in/SU
-//   change. No clock edges are involved in this testbench at all.
-// =====================================================================
 `timescale 1ns/1ps
 
 module alu_tb;
