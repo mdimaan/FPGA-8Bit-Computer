@@ -1,22 +1,3 @@
-// =====================================================================
-// Testbench   : mar_tb
-// Unit Under Test : mar.v
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. Reset, confirm mar_out = 0.
-//   2. Drive bus_in=0x05 with MI=1, EN=1; confirm mar_out latches 5.
-//   3. Change bus_in without asserting MI; confirm mar_out holds (5).
-//   4. Assert MI again with EN=0; confirm mar_out does NOT change
-//      (manual-step gating).
-//   5. Assert MI with EN=1 and a new bus value; confirm it latches.
-//
-// Expected Waveform (mar_tb.vcd):
-//   reset high -> mar_out flat 0.
-//   MI pulse with bus_in=5 -> mar_out steps to 5 on next posedge clk.
-//   bus_in changes while MI=0 -> mar_out unaffected (flat line at 5).
-//   MI=1,EN=0 -> mar_out still flat (gating proven).
-//   MI=1,EN=1 -> mar_out steps to new value.
-// =====================================================================
 `timescale 1ns/1ps
 
 module mar_tb;
