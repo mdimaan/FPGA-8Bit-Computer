@@ -1,21 +1,3 @@
-// =====================================================================
-// Testbench   : flag_reg_tb
-// Unit Under Test : flag_reg.v
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. Reset, confirm flags = 2'b00.
-//   2. FI=1,EN=1, zero_in=1,carry_in=0; confirm flags = 2'b01 (ZF=1).
-//   3. FI=0; change zero_in/carry_in; confirm flags HOLD (latched).
-//   4. FI=1,EN=1, zero_in=0,carry_in=1; confirm flags = 2'b10 (CF=1).
-//   5. FI=1,EN=0; confirm flags do NOT change (gating).
-//
-// Expected Waveform (flag_reg_tb.vcd):
-//   flags flat 00 through reset.
-//   Step to 01 on first FI+EN capture (ZF=1,CF=0).
-//   Flat at 01 while FI=0 even though zero_in/carry_in toggle.
-//   Step to 10 on next FI+EN capture (ZF=0,CF=1).
-//   Flat at 10 during EN=0 window despite FI=1.
-// =====================================================================
 `timescale 1ns/1ps
 
 module flag_reg_tb;
