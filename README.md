@@ -445,19 +445,19 @@ FPGA_8BIT_COMPUTER/
 
 # Contributors
 
-### Mohammed Shakil Imaan
+### Velmurugan R
 
 B.E. Electrical and Electronics Engineering
 Bannari Amman Institute of Technology
 
-Harish P
+ ### Harish P
 
 B.E. Electrical and Electronics Engineering
 Bannari Amman Institute of Technology
 
 GitHub: https://github.com/harishee129
 
-Velmurugan R
+### Mohammed Shakil Imaan A
 
 B.E. Electrical and Electronics Engineering
 Bannari Amman Institute of Technology
