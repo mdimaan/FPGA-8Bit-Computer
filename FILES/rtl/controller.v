@@ -1,36 +1,3 @@
-// =====================================================================
-// Module      : controller
-// Purpose     : Hardwired control unit. Combinationally decodes the
-//               current timing state (step, from step_counter.v) and
-//               the latched opcode (from ir.v) into the set of
-//               micro-operation control signals that drive every
-//               other module. This is the "ROM-less" SAP-1 style
-//               control approach: step_counter.v is the only state
-//               register, and controller.v is a pure decoder.
-// -----------------------------------------------------------------------
-// Signal Explanation (outputs):
-//   CO   : PC output enable           (PC -> bus)
-//   CE   : PC count enable             (PC <= PC+1)
-//   MI   : MAR load enable             (bus -> MAR)
-//   RO   : RAM output enable           (RAM -> bus)
-//   RI   : RAM write enable            (bus -> RAM)
-//   II   : IR load enable              (bus -> IR)
-//   IO   : IR operand output enable    (IR[3:0] -> bus)
-//   AI   : A register load enable      (bus -> A)
-//   AO   : A register output enable    (A -> bus)
-//   BI   : B register load enable      (bus -> B)
-//   OI   : Output register load enable (bus -> OUT)
-//   LP   : PC load enable (jump)       (bus[3:0] -> PC)
-//   SU   : ALU subtract select         (0=ADD, 1=SUB)
-//   EO   : ALU output enable           (ALU result -> bus)
-//   FI   : Flag register load enable   (ALU flags -> FLAGS)
-//   HLT  : Halt indication. Freezes step_counter.v when 1.
-//
-// Inputs:
-//   step      : One-hot timing state from step_counter.v (T1..T5).
-//   opcode    : 4-bit latched opcode from ir.v.
-//   zero_flag : Registered Zero Flag from flag_reg.v, tested by JZ.
-// =====================================================================
 module controller (
     input  wire [4:0] step,
     input  wire [3:0] opcode,
@@ -58,78 +25,65 @@ module controller (
     localparam OP_HLT = 4'b1111;
 
     always @(*) begin
-        // Safe default: every control signal low unless explicitly
-        // asserted below for the current (step, opcode) combination.
         CO = 1'b0; CE = 1'b0; MI = 1'b0; RO = 1'b0; RI = 1'b0;
         II = 1'b0; IO = 1'b0; AI = 1'b0; AO = 1'b0; BI = 1'b0;
         OI = 1'b0; LP = 1'b0; SU = 1'b0; EO = 1'b0; FI = 1'b0;
         HLT = 1'b0;
 
         case (step)
-
-            // ---------------- FETCH (common to every instruction) ----
             T1: begin
-                CO = 1'b1;   // PC -> bus
-                MI = 1'b1;   // bus -> MAR
+                CO = 1'b1;   
+                MI = 1'b1;   
             end
-
             T2: begin
-                RO = 1'b1;   // RAM -> bus
-                II = 1'b1;   // bus -> IR
-                CE = 1'b1;   // PC <= PC + 1
+                RO = 1'b1;   
+                II = 1'b1;   
+                CE = 1'b1;   
             end
-
-            // ---------------- EXECUTE ---------------------------------
             T3: begin
                 case (opcode)
                     OP_LDA, OP_ADD, OP_SUB, OP_STA: begin
-                        IO = 1'b1;   // IR operand -> bus
-                        MI = 1'b1;   // bus -> MAR
+                        IO = 1'b1;   
+                        MI = 1'b1;   
                     end
                     OP_JMP: begin
-                        IO = 1'b1;   // IR operand -> bus
-                        LP = 1'b1;   // bus -> PC
+                        IO = 1'b1;   
+                        LP = 1'b1;   
                     end
                     OP_JZ: begin
                         if (zero_flag) begin
                             IO = 1'b1;
                             LP = 1'b1;
                         end
-                        // zero_flag == 0 : no operation this step;
-                        // T4/T5 are also NOPs for JZ (see below), so
-                        // the instruction simply falls through to the
-                        // next fetch after 5 T-states either way.
                     end
                     OP_OUT: begin
-                        AO = 1'b1;   // A -> bus
-                        OI = 1'b1;   // bus -> OUT
+                        AO = 1'b1;   
+                        OI = 1'b1;   
                     end
                     OP_HLT: begin
-                        HLT = 1'b1;  // freeze step_counter
+                        HLT = 1'b1;  
                     end
-                    default: ; // undefined opcode -> NOP
+                    default: ;
                 endcase
             end
-
             T4: begin
                 case (opcode)
-                    OP_LDA: begin RO = 1'b1; AI = 1'b1; end // RAM->bus->A
-                    OP_ADD: begin RO = 1'b1; BI = 1'b1; end // RAM->bus->B
-                    OP_SUB: begin RO = 1'b1; BI = 1'b1; end // RAM->bus->B
-                    OP_STA: begin AO = 1'b1; RI = 1'b1; end // A->bus->RAM
-                    default: ; // LDA/JMP/JZ/OUT/HLT already done by T3
+                    OP_LDA: begin RO = 1'b1; AI = 1'b1; end 
+                    OP_ADD: begin RO = 1'b1; BI = 1'b1; end 
+                    OP_SUB: begin RO = 1'b1; BI = 1'b1; end 
+                    OP_STA: begin AO = 1'b1; RI = 1'b1; end 
+                    default: ; 
                 endcase
             end
-
             T5: begin
                 case (opcode)
                     OP_ADD: begin EO = 1'b1; AI = 1'b1; FI = 1'b1; SU = 1'b0; end
                     OP_SUB: begin EO = 1'b1; AI = 1'b1; FI = 1'b1; SU = 1'b1; end
-                    default: ; // only ADD/SUB use T5
+                    default: ; 
                 endcase
             end
 
-            default: ; // unreachable (one-hot step)
+            default: ; 
         endcase
     end
 
