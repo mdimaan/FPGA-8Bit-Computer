@@ -1,23 +1,3 @@
-// =====================================================================
-// Testbench   : step_counter_tb
-// Unit Under Test : step_counter.v
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. Reset, confirm step = T1 (5'b00001).
-//   2. EN=1, hlt=0: step through one full cycle T1->T2->T3->T4->T5->T1,
-//      checking each state in order.
-//   3. EN=0: confirm step HOLDS (manual single-stepping gating).
-//   4. EN=1, hlt=1: confirm step FREEZES at its current value even
-//      though EN pulses (models the permanent HLT condition).
-//   5. Reset again: confirm step returns to T1 even while hlt=1.
-//
-// Expected Waveform (step_counter_tb.vcd):
-//   step one-hot value cycles 00001->00010->00100->01000->10000->00001
-//   each clock while EN=1,hlt=0.
-//   Flat line (no change) during the EN=0 window.
-//   Flat line again during the hlt=1 window even with EN=1.
-//   Drops back to 00001 the instant reset is asserted.
-// =====================================================================
 `timescale 1ns/1ps
 
 module step_counter_tb;
