@@ -113,7 +113,6 @@ The Control Unit coordinates all operations using dedicated control signals and 
 
 # Block Diagram
 
-Insert your architecture block diagram image here.
 <img width="3360" height="4762" alt="8bit_computer_architecture_v3" src="https://github.com/user-attachments/assets/5755350d-5b48-4708-affd-69e477e4cc8a" />
 
 
