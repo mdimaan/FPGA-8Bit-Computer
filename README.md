@@ -79,7 +79,7 @@ The design ensures reliable operation through synchronized control signals, regi
 
 ### Design Tool
 
-* AMD Vivado 2024
+* AMD Vivado 2025
 
 ### Verification
 
