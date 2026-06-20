@@ -81,14 +81,25 @@ set_property -dict { PACKAGE_PIN B5 IOSTANDARD LVCMOS33 } [get_ports { SEG[6] }]
 ## high and constrain it to A6, or simply leave it disconnected.
 
 ## ---------------------------------------------------------------------
-## OPTIONAL: physical push-buttons as an alternative to toggling
-## SW[12] (WRITE) / SW[15] (STEP) with your fingers. Both behave
-## identically from the RTL's point of view (each is just a one-shot
-## edge-detected pulse) -- uncomment and rewire in sap_top.v if you
-## prefer momentary push-buttons over slide switches for these two
-## control lines.
+## Full-clear push-button (H2): wipes CPU registers AND all of RAM.
+## This pin is ACTIVE -- BTN_CLR is a real port on sap_top.v.
+## Assumed active-high (standard Digilent/RealDigital convention:
+## pressed = 1). If your button reads inverted on real hardware,
+## invert it once at this single line (e.g. add `IBUF` constraints or
+## flip the polarity inside sap_top.v's synchronizer) rather than
+## chasing it through the whole design.
+## ---------------------------------------------------------------------
+set_property -dict { PACKAGE_PIN H2 IOSTANDARD LVCMOS33 } [get_ports { BTN_CLR }];
+
+## ---------------------------------------------------------------------
+## OPTIONAL: remaining physical push-buttons as an alternative to
+## toggling SW[12] (WRITE) / SW[15] (STEP) with your fingers. Both
+## behave identically from the RTL's point of view (each is just a
+## one-shot edge-detected pulse) -- uncomment and rewire in sap_top.v
+## if you prefer momentary push-buttons over slide switches for these
+## two control lines. (H2/GPIO_PB_SW2 has been removed from this list
+## since it is now used above for BTN_CLR.)
 ## ---------------------------------------------------------------------
 # set_property -dict { PACKAGE_PIN J2 IOSTANDARD LVCMOS33 } [get_ports { BTN_WRITE }];
 # set_property -dict { PACKAGE_PIN J5 IOSTANDARD LVCMOS33 } [get_ports { BTN_STEP   }];
-# set_property -dict { PACKAGE_PIN H2 IOSTANDARD LVCMOS33 } [get_ports { BTN_RESET  }];
 # set_property -dict { PACKAGE_PIN J1 IOSTANDARD LVCMOS33 } [get_ports { BTN_RUN    }];
