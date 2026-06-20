@@ -1,24 +1,3 @@
-// =====================================================================
-// Testbench   : bus_mux_tb
-// Unit Under Test : bus_mux.v (purely combinational)
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. All select lines low -> bus_out = 0x00 (default).
-//   2. CO=1 -> bus_out = zero-extended pc_val.
-//   3. RO=1 -> bus_out = ram_val.
-//   4. AO=1 -> bus_out = a_val.
-//   5. EO=1 -> bus_out = alu_val.
-//   6. IO=1 -> bus_out = zero-extended ir_operand.
-//   7. Priority check: CO=1 and RO=1 together -> CO wins (CO is
-//      checked first in the if/else-if chain). In real operation the
-//      controller never asserts two source-enables simultaneously,
-//      but the mux's defined priority is verified here for safety.
-//
-// Expected Waveform (bus_mux_tb.vcd):
-//   bus_out jumps immediately (combinationally) to the selected
-//   source's value each time the corresponding *_val input or select
-//   line changes -- no clock is involved.
-// =====================================================================
 `timescale 1ns/1ps
 
 module bus_mux_tb;
