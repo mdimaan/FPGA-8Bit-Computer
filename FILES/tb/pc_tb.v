@@ -1,27 +1,3 @@
-// =====================================================================
-// Testbench   : pc_tb
-// Unit Under Test : pc.v
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. Apply reset, confirm pc_out = 0.
-//   2. Hold EN=1, CE=1 for several clocks, confirm pc_out increments
-//      by 1 each clock (0,1,2,...).
-//   3. Assert LP with bus_in=0x0A, confirm pc_out loads 0xA (jump).
-//   4. Drop EN to 0 while CE=1, confirm pc_out HOLDS (no count) --
-//      this is the manual single-step gating behaviour.
-//   5. Re-assert EN, confirm counting resumes from where it left off.
-//   6. Reset again and run CE for 16 clocks, confirm 4-bit wraparound
-//      (15 -> 0).
-//
-// Expected Waveform (pc_tb.vcd):
-//   reset high for first 2 clk periods -> pc_out flat at 0.
-//   reset low, EN=1,CE=1 -> pc_out staircases up by 1 each posedge clk.
-//   LP pulse for 1 clock with bus_in=0x0A -> pc_out jumps to 0xA on
-//   the next posedge clk, regardless of CE.
-//   EN=0 region -> pc_out is a flat line (no change) even though CE
-//   is still asserted underneath.
-//   Final reset + 16 CE clocks -> pc_out ramps 0..15 then wraps to 0.
-// =====================================================================
 `timescale 1ns/1ps
 
 module pc_tb;
