@@ -258,14 +258,16 @@ The processor uses an 8-bit instruction format.
 ---
 
 # Instruction Set Architecture (ISA)
-
-| Opcode | Mnemonic | Description          |
-| ------ | -------- | -------------------- |
-| 0000   | LDA      | Load Accumulator     |
-| 0001   | ADD      | Add Memory Data      |
-| 0010   | SUB      | Subtract Memory Data |
-| 1000   | OUT      | Output Data          |
-| 1111   | HLT      | Halt Processor       |
+| Instruction  | Operation              |
+| ------------ | ---------------------- |
+| **LDA addr** | `A ← RAM[addr]`        |
+| **ADD addr** | `A ← A + RAM[addr]`    |
+| **SUB addr** | `A ← A − RAM[addr]`    |
+| **STA addr** | `RAM[addr] ← A`        |
+| **JMP addr** | `PC ← addr`            |
+| **JZ addr**  | `If ZF = 1, PC ← addr` |
+| **OUT**      | `OUT ← A`              |
+| **HLT**      | Stop CPU Execution     |
 
 ---
 
