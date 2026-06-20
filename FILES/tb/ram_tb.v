@@ -1,31 +1,3 @@
-// =====================================================================
-// Testbench   : ram_tb
-// Unit Under Test : ram.v
-// -----------------------------------------------------------------------
-// Stimulus:
-//   1. Program Mode (run_mode=0): write 0xAA to address 0x3 via
-//      prog_write pulse; confirm ram_out reflects it when prog_addr=3.
-//   2. Program Mode: write a second location (addr=0x7, data=0x55);
-//      confirm both locations hold their distinct values.
-//   3. Program Mode: change prog_addr WITHOUT a write pulse; confirm
-//      ram_out simply follows the read address (no accidental write).
-//   4. Switch to Run Mode (run_mode=1): confirm ram_out now reflects
-//      mem[addr_run] (the previously programmed value at address 3).
-//   5. Run Mode: RI=1,EN=1 with bus_in=0x99 at addr_run=3; confirm the
-//      location is overwritten and ram_out updates.
-//   6. Run Mode: RI=1,EN=0; confirm NO write occurs (gating).
-//   7. Run Mode: RI=1,EN=1,reset=1; confirm NO write occurs (reset
-//      blocks run-mode writes).
-//   8. Confirm RAM contents are NOT cleared by reset (value from step
-//      2 still readable afterward).
-//
-// Expected Waveform (ram_tb.vcd):
-//   prog_write pulses are narrow (1 clk) one-shot pulses; ram_out
-//   updates on the clock edge following each pulse.
-//   run_mode transition switches ram_out's addressing source
-//   instantly (combinational mux on addr_sel).
-//   RI-driven writes in Run Mode only commit when EN=1 and reset=0.
-// =====================================================================
 `timescale 1ns/1ps
 
 module ram_tb;
