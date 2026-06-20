@@ -445,6 +445,8 @@ FPGA_8BIT_COMPUTER/
 B.E. Electrical and Electronics Engineering
 Bannari Amman Institute of Technology
 
+GitHub: https://github.com/velmurugan-vlsi
+
  ### Harish P
 
 B.E. Electrical and Electronics Engineering
@@ -457,7 +459,6 @@ GitHub: https://github.com/harishee129
 B.E. Electrical and Electronics Engineering
 Bannari Amman Institute of Technology
 
-GitHub: https://github.com/velmurugan-vlsi
 ### Faculty Mentor
 
 Dr. Elango Sekar
