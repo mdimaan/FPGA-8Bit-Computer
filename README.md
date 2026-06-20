@@ -50,7 +50,7 @@ The design ensures reliable operation through synchronized control signals, regi
 * Shared 8-Bit System Bus
 * Program Counter (PC)
 * Memory Address Register (MAR)
-* 32 × 8 RAM Memory
+* 16 × 8 RAM Memory
 * Instruction Register (IR)
 * Arithmetic Logic Unit (ALU)
 * A Register (Accumulator)
