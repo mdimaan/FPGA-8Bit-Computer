@@ -33,6 +33,3 @@ set_property -dict { PACKAGE_PIN B5 IOSTANDARD LVCMOS33 } [get_ports { SEG[6] }]
 
 set_property -dict { PACKAGE_PIN H2 IOSTANDARD LVCMOS33 } [get_ports { BTN_CLR }];
 
-# set_property -dict { PACKAGE_PIN J2 IOSTANDARD LVCMOS33 } [get_ports { BTN_WRITE }];
-# set_property -dict { PACKAGE_PIN J5 IOSTANDARD LVCMOS33 } [get_ports { BTN_STEP   }];
-# set_property -dict { PACKAGE_PIN J1 IOSTANDARD LVCMOS33 } [get_ports { BTN_RUN    }];
