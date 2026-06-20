@@ -111,63 +111,50 @@ module sap_top_tb;
         step_once; step_once; step_once; step_once; step_once;
         check8(dut.a_val, 8'h2A, "P1: after 2nd LDA, A=0x2A (42)");
 
-        // ---- OUT : 5 ticks
         step_once; step_once; step_once; step_once; step_once;
         check8(dut.out_val, 8'h2A, "P1: out_val=0x2A (42) after OUT");
 
-        // ---- HLT : 3 ticks reach T3 and freeze
         step_once; step_once; step_once;
         check1(dut.HLT, 1'b1, "P1: HLT asserted, machine halted");
 
-        // Extra ticks must have NO further effect (frozen)
         step_once; step_once; step_once;
         check8(dut.a_val, 8'h2A, "P1: A unchanged after halt (extra steps ignored)");
         check1(dut.HLT, 1'b1, "P1: HLT still asserted after extra steps");
 
-        // =================================================================
-        // PROGRAM 2 : LDA / ADD / STA / JMP / LDA / OUT / HLT
-        // =================================================================
-        SW[13] = 0; // back to Program Mode to load new code
-        prog_write_byte(4'd0,  8'h09); // LDA 9
-        prog_write_byte(4'd1,  8'h1A); // ADD 10
-        prog_write_byte(4'd2,  8'h3B); // STA 11
-        prog_write_byte(4'd3,  8'h46); // JMP 6
-        prog_write_byte(4'd6,  8'h0B); // LDA 11
-        prog_write_byte(4'd7,  8'hE0); // OUT
-        prog_write_byte(4'd8,  8'hF0); // HLT
-        prog_write_byte(4'd9,  8'h07); // data 7
-        prog_write_byte(4'd10, 8'h08); // data 8
+        SW[13] = 0; 
+        prog_write_byte(4'd0,  8'h09); 
+        prog_write_byte(4'd1,  8'h1A); 
+        prog_write_byte(4'd2,  8'h3B); 
+        prog_write_byte(4'd3,  8'h46); 
+        prog_write_byte(4'd6,  8'h0B); 
+        prog_write_byte(4'd7,  8'hE0);
+        prog_write_byte(4'd8,  8'hF0); 
+        prog_write_byte(4'd9,  8'h07); 
+        prog_write_byte(4'd10, 8'h08); 
 
-        do_reset(); // restart CPU (RAM contents persist -- verified separately)
+        do_reset(); 
 
-        SW[13] = 1; // RUN=1
+        SW[13] = 1; 
 
-        // ---- LDA 9 : 5 ticks
         step_once; step_once; step_once; step_once; step_once;
         check8(dut.a_val, 8'h07, "P2: after LDA 9, A=0x07");
 
-        // ---- ADD 10 : 5 ticks
         step_once; step_once; step_once; step_once; step_once;
         check8(dut.a_val, 8'h0F, "P2: after ADD 10, A=0x0F (15)");
         check1(dut.flags[0], 1'b0, "P2: ZF=0 (15 != 0)");
 
-        // ---- STA 11 : 5 ticks
         step_once; step_once; step_once; step_once; step_once;
         check8(dut.RAM0.mem[11], 8'h0F, "P2: RAM[11]=0x0F after STA (via debug read)");
 
-        // ---- JMP 6 : 5 ticks
         step_once; step_once; step_once; step_once; step_once;
         check8({4'b0000, dut.pc_val}, 8'h06, "P2: PC=6 after JMP");
 
-        // ---- LDA 11 : 5 ticks
         step_once; step_once; step_once; step_once; step_once;
         check8(dut.a_val, 8'h0F, "P2: after 2nd LDA, A=0x0F (15, read back from RAM)");
 
-        // ---- OUT : 5 ticks
         step_once; step_once; step_once; step_once; step_once;
         check8(dut.out_val, 8'h0F, "P2: out_val=0x0F (15) after OUT");
 
-        // ---- HLT : 3 ticks
         step_once; step_once; step_once;
         check1(dut.HLT, 1'b1, "P2: HLT asserted, machine halted");
 
